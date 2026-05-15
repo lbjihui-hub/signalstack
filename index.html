@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Langston Brown | IT Systems & Infrastructure</title>
+  <style>
+    :root {
+      --accent: #f4c542;
+      --text: #111111;
+      --light: #f8f5ee;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background: #ffffff;
+    }
+    .page {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      min-height: 100vh;
+    }
+    .side-rail {
+      background: var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .portrait {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+    .content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 60px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .brand {
+      font-size: 28px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+    }
+    nav a {
+      margin-left: 32px;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+    }
+    nav a:hover { color: var(--text); }
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      max-width: 800px;
+    }
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 28px;
+      border: 2px solid #111;
+      background: transparent;
+      color: #111;
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #111;
+      color: white;
+    }
+    .btn-primary {
+      background: #111;
+      color: white;
+    }
+    h2 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 12px;
+      display: inline-block;
+    }
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: #666;
+      border-top: 1px solid #eee;
+      margin-top: 60px;
+    }
+    @media (max-width: 768px) {
+      .page { grid-template-columns: 1fr; }
+      .side-rail { position: relative; height: auto; padding: 30px 0; }
+      .content { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="side-rail">
+      <div class="portrait">📸</div>
+    </aside>
+
+    <div class="content">
+      <header>
+        <a href="#" class="brand">Langston Brown</a>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#certs">Certifications</a>
+          <a href="#writing">Writing</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <h1>IT professional focused on systems administration, networking, identity management, and cybersecurity.</h1>
+          <p>Recently completed my B.B.A. in Management Information Systems. 8 years of hands-on experience supporting enterprise environments.</p>
+          
+          <div class="buttons">
+            <a href="#projects" class="btn btn-primary">View Projects & Labs</a>
+            <a href="#contact" class="btn">Get in Touch</a>
+          </div>
+        </section>
+
+        <section id="about">
+          <h2>About Me</h2>
+          <p>Welcome. This is my professional portfolio and technical learning archive.</p>
+        </section>
+
+        <section id="projects">
+          <h2>Projects & Labs</h2>
+          <ul>
+            <li>Active Directory & Group Policy Home Lab</li>
+            <li>Azure Cloud Administration Labs</li>
+            <li>PowerShell Automation Scripts</li>
+            <li>Vulnerability Scanning & Security Labs</li>
+          </ul>
+        </section>
+
+        <section id="certs">
+          <h2>Certifications</h2>
+          <ul>
+            <li>CompTIA CySA+</li>
+            <li>CompTIA Security+</li>
+            <li>CompTIA Network+</li>
+            <li>ISC2 Certified in Cybersecurity (CC)</li>
+          </ul>
+        </section>
+
+        <section id="writing" style="background:#f8f5ee; padding:40px; margin-top:40px;">
+          <h2>Technical Writing & Research</h2>
+          <p>Presented research on 802.11 wireless vulnerabilities and deauthentication attacks at Utah State University.</p>
+        </section>
+
+        <section id="contact">
+          <h2>Contact</h2>
+          <p>lbjihui@gmail.com<br>
+          <a href="https://www.linkedin.com/in/lang21" target="_blank">LinkedIn</a></p>
+        </section>
+      </main>
+
+      <footer>
+        © 2026 Langston Brown • Built with frustration & caffeine
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
