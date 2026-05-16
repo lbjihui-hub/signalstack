@@ -1,154 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Langston Brown | IT Systems & Infrastructure</title>
-  <meta content="Langston Brown - IT Systems Administrator & Cybersecurity Professional" name="description">
+  <style>
+    :root {
+      --dark: #101D18;
+      --accent: #244B3A;
+      --accent-light: #5F8C6D;
+      --light: #F7F4EA;
+      --text: #101D18;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light);
+    }
+    .page {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      min-height: 100vh;
+    }
+    .side-rail {
+      background: var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .portrait {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #fff;
+      margin-bottom: 40px;
+    }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    .content { max-width: 1000px; margin: 0 auto; padding: 40px 60px; }
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    .brand {
+      font-size: 29px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    /* Hamburger */
+    .nav-toggle {
+      font-size: 28px;
+      cursor: pointer;
+      display: none;
+    }
+    nav {
+      display: flex;
+      gap: 32px;
+    }
+    nav a {
+      color: #444;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--accent); }
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      nav { 
+        position: fixed; top: 0; left: -100%; width: 100%; height: 100vh;
+        background: var(--dark); flex-direction: column; padding: 120px 40px 40px;
+        transition: 0.4s ease; align-items: center; gap: 30px;
+        font-size: 22px;
+      }
+      nav.active { left: 0; }
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6.5vw, 72px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .hero p { font-size: 21px; max-width: 680px; margin-bottom: 40px; }
+
+    .btn {
+      padding: 14px 32px;
+      border: 2px solid var(--text);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .btn:hover { background: var(--text); color: white; }
+
+    h2 {
+      font-size: 28px;
+      margin: 60px 0 24px;
+      color: var(--accent);
+      border-bottom: 3px solid var(--accent-light);
+      padding-bottom: 12px;
+      display: inline-block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 0 30px;
+      color: #666;
+    }
+  </style>
 </head>
-
-<body class="index-page">
-
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <div class="profile-img">
-      <img src="photo.jpg" alt="Langston Brown" class="img-fluid rounded-circle">
-    </div>
-
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <h1 class="sitename">Langston Brown</h1>
-    </a>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i>About</a></li>
-        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i>Resume</a></li>
-        <li><a href="#portfolio"><i class="bi bi-images navicon"></i>Projects</a></li>
-        <li><a href="#kba"><i class="bi bi-book navicon"></i>KBA & Writing</a></li>
-        <li><a href="#experiments"><i class="bi bi-lightbulb navicon"></i>Experiments</a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i>Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Langston Brown</h2>
-        <p>IT professional focused on systems administration, networking, identity management, and cybersecurity.</p>
+<body>
+  <div class="page">
+    <aside class="side-rail">
+      <div class="portrait">
+        <img src="photo.jpg" alt="Langston Brown">
       </div>
-    </section>
+    </aside>
 
-    <!-- About Section -->
-    <section id="about" class="about section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About Me</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4">
-          <div class="col-lg-8 content">
-            <p>Welcome to my portfolio. This is both a professional showcase and a living archive of my technical journey.</p>
-            <p>I have 8 years of hands-on experience supporting enterprise systems in government and healthcare environments. I specialize in Active Directory, Microsoft 365 administration, endpoint security, troubleshooting complex systems, and security operations.</p>
+    <div class="content">
+      <header>
+        <a href="#" class="brand">Langston Brown</a>
+        <span class="nav-toggle">☰</span>
+        <nav id="main-nav">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#certs">Certifications</a>
+          <a href="#kba">KBA & Writing</a>
+          <a href="#experiments">Experiments</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <h1>IT professional focused on systems administration, networking, identity management, and cybersecurity.</h1>
+          <p>Recently completed my B.B.A. in Management Information Systems. 8 years supporting enterprise environments.</p>
+          
+          <div style="margin-top:40px;">
+            <a href="#projects" class="btn">View Projects & Labs</a>
+            <a href="resume.pdf" class="btn" style="margin-left:12px;" target="_blank">Download Resume</a>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <a href="resume.pdf" class="btn btn-primary" target="_blank" style="margin-bottom: 30px;">Download Full Resume (PDF)</a>
-      </div>
-    </section>
+        <section id="about">
+          <h2>About Me</h2>
+          <p>Welcome. This is my professional portfolio and technical learning archive.</p>
+        </section>
 
-    <!-- Projects / Portfolio Section -->
-    <section id="portfolio" class="portfolio section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Projects & Labs</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <p>Active Directory & Group Policy labs, Azure cloud work, PowerShell automation, vulnerability scanning, and more coming soon.</p>
-      </div>
-    </section>
+        <section id="projects">
+          <h2>Projects & Labs</h2>
+          <p>Coming soon with screenshots and detailed write-ups.</p>
+        </section>
 
-    <!-- KBA & Writing -->
-    <section id="kba" class="section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Knowledge Base & Writing</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <p>Technical articles, KBAs, and documentation I've created.</p>
-      </div>
-    </section>
+        <section id="certs">
+          <h2>Certifications</h2>
+          <p>CompTIA CySA+, Security+, Network+, A+, ISC2 Certified in Cybersecurity (CC)</p>
+        </section>
 
-    <!-- Experiments & Research -->
-    <section id="experiments" class="section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Experiments & Research</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <p>Wireless security research (802.11 deauthentication attacks), home labs, and architecture notes.</p>
-      </div>
-    </section>
+        <section id="kba">
+          <h2>Knowledge Base & Writing</h2>
+          <p>Technical articles, KBAs, and documentation I've created.</p>
+        </section>
 
-    <!-- Contact -->
-    <section id="contact" class="contact section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-      </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <p><strong>Email:</strong> lbjihui@gmail.com</p>
-        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/lang21" target="_blank">linkedin.com/in/lang21</a></p>
-      </div>
-    </section>
+        <section id="experiments">
+          <h2>Experiments & Research</h2>
+          <p>Wireless security research, home labs, and architecture notes.</p>
+        </section>
 
-  </main>
+        <section id="contact">
+          <h2>Contact</h2>
+          <p>lbjihui@gmail.com • <a href="https://www.linkedin.com/in/lang21" target="_blank">LinkedIn</a></p>
+        </section>
+      </main>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+      <footer>
+        © 2026 Langston Brown
+      </footer>
+    </div>
+  </div>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
+  <script>
+    // Hamburger Menu
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('main-nav');
+    
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
