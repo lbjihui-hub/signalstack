@@ -1,759 +1,149 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signal & Systems | Infrastructure Portfolio</title>  <style>
-    :root {
-      --ink: #101d18;
-      --muted: #5f665f;
-      --paper: #f7f4ea;
-      --white: #ffffff;
-      --green: #244b3a;
-      --sage: #6f8f78;
-      --line: rgba(16, 29, 24, 0.18);
-      --soft: rgba(36, 75, 58, 0.08);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.65;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 84px minmax(0, 1fr);
-    }
-
-    .rail {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      background: var(--green);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 32px 0;
-      color: var(--paper);
-    }
-
-    .mark {
-      width: 46px;
-      height: 46px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      letter-spacing: -0.05em;
-    }
-
-    .rail-text {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: 0.85;
-    }
-
-    .content {
-      width: min(1180px, 100%);
-      margin: 0 auto;
-      padding: 42px 56px 34px;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 82px;
-    }
-
-    .brand {
-      text-decoration: none;
-    }
-
-    .brand-title {
-      font-size: 25px;
-      line-height: 1;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-subtitle {
-      margin-top: 8px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .nav-toggle {
-      display: none;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--ink);
-      font-size: 22px;
-      width: 44px;
-      height: 44px;
-      cursor: pointer;
-    }
-
-    nav {
-      display: flex;
-      gap: 26px;
-      align-items: center;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--muted);
-    }
-
-    nav a:hover {
-      color: var(--ink);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
-      gap: 64px;
-      align-items: end;
-      padding-bottom: 88px;
-    }
-
-    .eyebrow {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 22px;
-      font-weight: 700;
-    }
-
-    h1 {
-      font-size: clamp(44px, 6vw, 82px);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-      max-width: 830px;
-      font-weight: 700;
-    }
-
-    .hero-copy {
-      margin-top: 28px;
-      max-width: 720px;
-      font-size: 22px;
-      color: #26342f;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 36px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 12px 22px;
-      border: 1px solid var(--ink);
-      color: var(--ink);
-      text-decoration: none;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 999px;
-      transition: 180ms ease;
-    }
-
-    .btn.primary {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(16, 29, 24, 0.14);
-    }
-
-    .identity-card {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.55);
-      padding: 28px;
-      border-radius: 24px;
-    }
-
-    .identity-card h2 {
-      font-size: 24px;
-      margin-bottom: 16px;
-      letter-spacing: -0.03em;
-    }
-
-    .identity-card p {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 15px;
-      color: var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .status-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 20px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-    }
-
-    .status-list div {
-      padding: 12px 0;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .status-list span:first-child {
-      color: var(--muted);
-    }
-
-    .panel {
-      background: var(--white);
-      border-radius: 34px;
-      padding: 54px;
-      box-shadow: 0 24px 70px rgba(16, 29, 24, 0.08);
-      margin-bottom: 42px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 32px;
-    }
-
-    .section-head h2 {
-      font-size: 38px;
-      line-height: 1.05;
-      letter-spacing: -0.045em;
-    }
-
-    .section-head p {
-      max-width: 480px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 15px;
-      color: var(--muted);
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 24px;
-      min-height: 220px;
-      background: var(--white);
-      transition: 180ms ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 38px rgba(16, 29, 24, 0.1);
-    }
-
-    .tag {
-      display: inline-block;
-      margin-bottom: 24px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--green);
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .card h3 {
-      font-size: 24px;
-      line-height: 1.12;
-      letter-spacing: -0.035em;
-      margin-bottom: 14px;
-    }
-
-    .card p {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .stack {
-      display: grid;
-      gap: 16px;
-    }
-
-    .list-block {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 26px;
-      background: var(--paper);
-    }
-
-    .list-block h3 {
-      font-size: 24px;
-      margin-bottom: 14px;
-      letter-spacing: -0.035em;
-    }
-
-    ul {
-      padding-left: 20px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      color: var(--muted);
-    }
-
-    li {
-      margin-bottom: 7px;
-    }
-
-    .timeline {
-      border-left: 1px solid var(--line);
-      padding-left: 24px;
-      display: grid;
-      gap: 26px;
-    }
-
-    .timeline-item h3 {
-      font-size: 23px;
-      letter-spacing: -0.035em;
-    }
-
-    .timeline-item p {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .contact-band {
-      background: var(--green);
-      color: var(--paper);
-      border-radius: 34px;
-      padding: 46px 54px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 26px;
-      margin-bottom: 36px;
-    }
-
-    .contact-band h2 {
-      font-size: 38px;
-      line-height: 1.05;
-      letter-spacing: -0.045em;
-    }
-
-    .contact-band p {
-      margin-top: 12px;
-      max-width: 560px;
-      color: rgba(247, 244, 234, 0.78);
-      font-family: "Segoe UI", system-ui, sans-serif;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-end;
-    }
-
-    .contact-links a {
-      color: var(--paper);
-      text-decoration: none;
-      border: 1px solid rgba(247, 244, 234, 0.45);
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    footer {
-      padding: 20px 0 8px;
-      text-align: center;
-      color: var(--muted);
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 13px;
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .split,
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .identity-card {
-        max-width: 520px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .shell {
-        grid-template-columns: 18px 1fr;
-      }
-
-      .rail {
-        padding: 0;
-      }
-
-      .mark,
-      .rail-text {
-        display: none;
-      }
-
-      .content {
-        padding: 28px 22px;
-      }
-
-      header {
-        margin-bottom: 56px;
-      }
-
-      .nav-toggle {
-        display: block;
-        z-index: 20;
-      }
-
-      nav {
-        position: fixed;
-        inset: 0 0 0 18px;
-        background: var(--ink);
-        color: var(--paper);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transform: translateX(105%);
-        transition: transform 220ms ease;
-        font-size: 22px;
-        z-index: 10;
-      }
-
-      nav.active {
-        transform: translateX(0);
-      }
-
-      nav a {
-        color: var(--paper);
-      }
-
-      .hero {
-        gap: 36px;
-        padding-bottom: 54px;
-      }
-
-      .hero-copy {
-        font-size: 19px;
-      }
-
-      .panel,
-      .contact-band {
-        padding: 32px 24px;
-        border-radius: 24px;
-      }
-
-      .section-head,
-      .contact-band {
-        display: block;
-      }
-
-      .section-head h2,
-      .contact-band h2 {
-        font-size: 32px;
-        margin-bottom: 16px;
-      }
-
-      .contact-links {
-        justify-content: flex-start;
-        margin-top: 24px;
-      }
-    }
-  </style></head><body>
+  <title>Home | Signal & Systems</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
   <div class="shell">
     <aside class="rail" aria-label="Site identity rail">
       <div class="mark">S/S</div>
       <div class="rail-text">Systems • Signals • Security</div>
-    </aside><div class="content">
-  <header>
-    <a href="#home" class="brand" aria-label="Signal and Systems home">
-      <div class="brand-title">Signal & Systems</div>
-      <div class="brand-subtitle">Infrastructure Portfolio</div>
-    </a>
+    </aside>
 
-    <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <div class="content">
+      <header class="site-header">
+        <a href="index.html" class="brand" aria-label="Signal and Systems home">
+          <div class="brand-title">Signal & Systems</div>
+          <div class="brand-subtitle">Infrastructure Portfolio</div>
+        </a>
 
-    <nav id="main-nav" aria-label="Main navigation">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#writing">Writing</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+        <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
 
-  <main id="home">
-    <section class="hero" aria-labelledby="intro-title">
-      <div>
-        <p class="eyebrow">Technical portfolio / systems notebook</p>
-        <h1 id="intro-title">Enterprise IT, identity, networking, and security — explained through labs, diagrams, and practical notes.</h1>
-        <p class="hero-copy">
-          A privacy-conscious portfolio documenting technical growth in infrastructure, cloud administration, endpoint management, cybersecurity, and systems thinking.
-        </p>
+        <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+          <a href="index.html" class="active">Home</a>
+          <a href="about.html">About</a>
+          <a href="resume.html">Resume & Credentials</a>
+          <a href="history.html">Professional History</a>
+          <a href="writing.html">Writing</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </header>
 
-        <div class="button-row">
-          <a href="#projects" class="btn primary">View Projects</a>
-          <a href="resume.pdf" class="btn" target="_blank" rel="noopener">Download Resume</a>
-          <a href="#writing" class="btn">Read Technical Notes</a>
-        </div>
-      </div>
+      <main>
+        <section class="hero" aria-labelledby="intro-title">
+          <div>
+            <p class="eyebrow">Technical portfolio / systems notebook</p>
 
-      <aside class="identity-card" aria-label="Portfolio snapshot">
-        <h2>Profile Snapshot</h2>
-        <p>
-          Built as a professional archive for projects, certification-domain mapping, technical writing, and practical demonstrations.
-        </p>
-        <div class="status-list">
-          <div><span>Focus</span><strong>Infrastructure</strong></div>
-          <div><span>Stack</span><strong>Microsoft / Azure</strong></div>
-          <div><span>Mode</span><strong>Labs + Writing</strong></div>
-          <div><span>Status</span><strong>Version 1</strong></div>
-        </div>
-      </aside>
-    </section>
+            <h1 id="intro-title">
+              Enterprise IT, identity, networking, and security — explained through labs, diagrams, and practical notes.
+            </h1>
 
-    <section class="panel" id="about">
-      <div class="section-head">
-        <h2>About this portfolio</h2>
-        <p>
-          This site is designed as a living record of technical learning, professional artifacts, and applied reasoning rather than a static resume page.
-        </p>
-      </div>
+            <p class="hero-copy">
+              A privacy-conscious portfolio documenting technical growth in infrastructure, cloud administration, endpoint management, cybersecurity, and systems thinking.
+            </p>
 
-      <div class="split">
-        <div class="list-block">
-          <h3>Areas of interest</h3>
-          <ul>
-            <li>Windows systems administration</li>
-            <li>Microsoft 365, Entra ID, and identity management</li>
-            <li>Networking, segmentation, wireless, and routing concepts</li>
-            <li>Endpoint management and security telemetry</li>
-            <li>Cloud infrastructure and governance</li>
-            <li>Documentation, KBAs, and technical writing</li>
-          </ul>
-        </div>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Professional direction</h3>
-            <p>Building toward infrastructure, endpoint, cloud, IAM, and security-adjacent roles that combine operations with systems analysis.</p>
+            <div class="button-row">
+              <a href="projects.html" class="btn primary">View Projects</a>
+              <a href="resume.html" class="btn">Resume & Credentials</a>
+              <a href="writing.html" class="btn">Read Technical Notes</a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <h3>Portfolio philosophy</h3>
-            <p>Show understanding through diagrams, lab notes, screenshots, risk analysis, and plain-English explanations of technical tradeoffs.</p>
+
+          <aside class="identity-card" aria-label="Portfolio snapshot">
+            <h2>Profile Snapshot</h2>
+
+            <p>
+              A professional archive for projects, certification-domain mapping, technical writing, and practical demonstrations.
+            </p>
+
+            <div class="status-list">
+              <div>
+                <span>Focus</span>
+                <strong>Infrastructure</strong>
+              </div>
+
+              <div>
+                <span>Stack</span>
+                <strong>Microsoft / Azure</strong>
+              </div>
+
+              <div>
+                <span>Mode</span>
+                <strong>Labs + Writing</strong>
+              </div>
+
+              <div>
+                <span>Status</span>
+                <strong>Version 1</strong>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <h2>Start here</h2>
+
+            <p>
+              The site is organized around what recruiters and technical reviewers usually need: credibility, evidence, writing, and contact.
+            </p>
           </div>
-          <div class="timeline-item">
-            <h3>Current build goal</h3>
-            <p>Publish a simple, credible GitHub Pages site first. Add polish, interactivity, and deeper labs after the foundation is live.</p>
+
+          <div class="card-grid">
+            <article class="card">
+              <span class="tag">Projects</span>
+              <h3>Labs & demonstrations</h3>
+              <p>
+                Windows, identity, endpoint monitoring, IoT traffic, Azure fundamentals, and architecture notes.
+              </p>
+              <a class="card-link" href="projects.html">Open projects →</a>
+            </article>
+
+            <article class="card">
+              <span class="tag">Credentials</span>
+              <h3>Resume & certifications</h3>
+              <p>
+                A controlled place to show resume, education, certifications, and future learning path.
+              </p>
+              <a class="card-link" href="resume.html">View credentials →</a>
+            </article>
+
+            <article class="card">
+              <span class="tag">Writing</span>
+              <h3>Technical notes</h3>
+              <p>
+                Short articles that demonstrate how I reason through systems, risks, tradeoffs, and architecture.
+              </p>
+              <a class="card-link" href="writing.html">Read writing →</a>
+            </article>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="panel" id="projects">
-      <div class="section-head">
-        <h2>Projects & labs</h2>
-        <p>
-          Initial project cards. Each one can later become a full write-up with screenshots, diagrams, objectives, lessons learned, and certification mappings.
-        </p>
-      </div>
+        <section class="contact-band">
+          <div>
+            <h2>Need the direct version?</h2>
+            <p>
+              Use the resume page or contact page for identity, professional links, and direct follow-up.
+            </p>
+          </div>
 
-      <div class="card-grid">
-        <article class="card">
-          <span class="tag">Endpoint</span>
-          <h3>Windows Endpoint Monitoring Lab</h3>
-          <p>Explore processes, services, event logs, Sysmon-style telemetry, resource impact, and centralized monitoring concepts.</p>
-        </article>
+          <div class="contact-links">
+            <a href="resume.html">Resume</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </section>
+      </main>
 
-        <article class="card">
-          <span class="tag">Network</span>
-          <h3>IoT Traffic Observation</h3>
-          <p>Document what smart devices communicate, how often, which protocols appear, and what privacy or segmentation concerns emerge.</p>
-        </article>
+      <footer>
+        © 2026 Signal & Systems. Built with HTML, CSS, JavaScript, and GitHub Pages.
+      </footer>
+    </div>
+  </div>
 
-        <article class="card">
-          <span class="tag">Architecture</span>
-          <h3>Federated Device Recovery</h3>
-          <p>A thought experiment on lost-device telemetry, PKI, relay networks, privacy, incentives, and cross-domain trust.</p>
-        </article>
-
-        <article class="card">
-          <span class="tag">Identity</span>
-          <h3>Active Directory & Group Policy</h3>
-          <p>Sketch and build a small domain with OUs, users, groups, GPOs, password policy, and endpoint restrictions.</p>
-        </article>
-
-        <article class="card">
-          <span class="tag">Security</span>
-          <h3>HIDS, HIPS & SIEM Tradeoffs</h3>
-          <p>Explain detection versus prevention, false positives, endpoint overhead, alerting, and centralized correlation.</p>
-        </article>
-
-        <article class="card">
-          <span class="tag">Cloud</span>
-          <h3>Azure Fundamentals Lab Notes</h3>
-          <p>Capture core Azure concepts: subscriptions, resource groups, identity, monitoring, cost controls, and governance basics.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel" id="certifications">
-      <div class="section-head">
-        <h2>Certification map</h2>
-        <p>
-          Certifications are treated as learning frameworks. Portfolio artifacts will map back to relevant exam objectives and domains.
-        </p>
-      </div>
-
-      <div class="card-grid">
-        <article class="card">
-          <span class="tag">CompTIA</span>
-          <h3>Core infrastructure</h3>
-          <p>A+, Network+, Security+, and CySA+ concepts mapped to labs in networking, endpoint security, monitoring, and incident analysis.</p>
-        </article>
-
-        <article class="card">
-          <span class="tag">ISC2</span>
-          <h3>Security foundations</h3>
-          <p>Risk, governance, access control, security principles, business continuity, and communication/network security concepts.</p>
-        </article>
-
-        <article class="card">
-          <span class="tag">Microsoft</span>
-          <h3>Cloud & identity path</h3>
-          <p>Azure, Microsoft 365, Entra ID, endpoint management, conditional access, and administrative controls.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel" id="writing">
-      <div class="section-head">
-        <h2>Writing & research notes</h2>
-        <p>
-          Short technical articles designed to demonstrate reasoning, not perfection. Each note starts small and improves over time.
-        </p>
-      </div>
-
-      <div class="split">
-        <div class="list-block">
-          <h3>First articles to publish</h3>
-          <ul>
-            <li>Understanding HIDS, HIPS, EDR, and SIEM tradeoffs</li>
-            <li>What smart-home devices reveal through network traffic</li>
-            <li>How identity became the modern security perimeter</li>
-            <li>Why endpoint performance matters in security tooling</li>
-            <li>Designing a small Windows domain lab on paper first</li>
-          </ul>
-        </div>
-
-        <div class="list-block">
-          <h3>Article template</h3>
-          <ul>
-            <li>Problem statement</li>
-            <li>Environment or assumptions</li>
-            <li>Architecture diagram</li>
-            <li>Security considerations</li>
-            <li>Relevant certification objectives</li>
-            <li>Lessons learned and next steps</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-band" id="contact">
-      <div>
-        <h2>Contact & professional links</h2>
-        <p>
-          Public portfolio identity is intentionally branded. Direct identity, resume, and contact details can be controlled through linked documents and professional profiles.
-        </p>
-      </div>
-
-      <div class="contact-links">
-        <a href="mailto:lbjihui@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/lang21" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="#" target="_blank" rel="noopener">GitHub</a>
-        <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © 2026 Signal & Systems. Built with HTML, CSS, and GitHub Pages.
-  </footer>
-</div>
-
-  </div>  <script>
-    const toggle = document.querySelector('.nav-toggle');
-    const nav = document.getElementById('main-nav');
-
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('active');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      toggle.textContent = isOpen ? '×' : '☰';
-    });
-
-    nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.textContent = '☰';
-      });
-    });
-  </script></body>
+  <script src="assets/js/main.js"></script>
+</body>
 </html>
