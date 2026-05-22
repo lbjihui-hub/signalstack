@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disk Exhaustion and Login Failures | Signal & Systems</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+<div class="shell">
+
+  <aside class="rail">
+    <div class="mark">S/S</div>
+    <div class="rail-text">Systems • Signals • Security</div>
+  </aside>
+
+  <div class="content">
+
+    <header class="site-header">
+      <a href="index.html" class="brand">
+        <div class="brand-title">Signal & Systems</div>
+        <div class="brand-subtitle">Infrastructure Portfolio</div>
+      </a>
+      <button class="nav-toggle">☰</button>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resume.html">Resume & Credentials</a>
+        <a href="history.html">Professional History</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html" class="active">Writing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Technical writing / infrastructure</p>
+          <h1>Diagnosing Login Failures Caused by Disk Exhaustion in a High-Turnover Domain Environment</h1>
+          <p class="hero-copy">
+            A Windows Profile Service failure in a justice facility environment traced to 
+            accumulated stale user profiles consuming available disk space — and how it was resolved.
+          </p>
+        </div>
+
+        <aside class="note-card">
+          <h2>Article details</h2>
+          <p><strong>Category:</strong> Infrastructure / Endpoint Operations</p>
+          <p><strong>Environment:</strong> Windows 11, domain-joined endpoints, high-turnover government facility</p>
+          <p><strong>Tools used:</strong> WizTree, Windows Registry Editor, Computer Management</p>
+          <a href="writing.html" class="btn">← Back to Writing</a>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The symptom</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Users at a correctional and criminal justice facility began receiving a 
+            <strong>"Windows Profile Service failed to start"</strong> error on login, 
+            preventing access to their workstations despite entering valid domain credentials. 
+            The affected machines were Windows 11 endpoints with 256GB of storage and 8GB of RAM, 
+            joined to the county domain.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The diagnosis</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Initial investigation using WizTree — a disk space visualization tool — revealed 
+            that approximately 120GB of available storage was consumed entirely by accumulated 
+            local user profiles. The facility had high staff turnover, and domain profiles for 
+            former employees and temporary staff dating back to 2023 and early 2024 had been 
+            downloaded to the local machine and never cleaned up.
+          </p>
+          <p>
+            With the disk near capacity, Windows could not write the temporary data required 
+            to initialize a new profile session. The Profile Service fails silently in this 
+            condition — the error message points to the service itself rather than disk space, 
+            which makes the root cause non-obvious without a disk inspection step.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The resolution</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Resolution involved three steps. First, identifying which profiles belonged to 
+            departed users by cross-referencing the profile folders in <code>C:\Users</code> 
+            against active accounts. Second, deleting the stale profile folders and removing 
+            the corresponding registry keys from:
+          </p>
+          <p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList</code></p>
+          <p>
+            Each profile has a subkey identified by its Security Identifier (SID). Removing 
+            both the folder and the registry entry cleanly deregisters the profile from the 
+            system. After restart, the freed disk space allowed Windows to initialize profile 
+            sessions normally and affected users could log in.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Related case: corrupted user profile</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            A secondary related case involved a user whose profile had become corrupted rather 
+            than simply accumulated. In this scenario the ProfileList registry key contained a 
+            malformed or duplicate entry for the user's SID. Resolution required locating the 
+            correct ProfileGUID entry, correcting the path reference, and in some cases 
+            rebuilding the profile entirely by renaming the existing profile folder and allowing 
+            Windows to generate a fresh one on next login.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Operational lesson</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Disk capacity is a silent dependency for Windows authentication that does not 
+            surface until it fails completely. In high-turnover environments where domain 
+            profiles accumulate on shared endpoints, periodic profile cleanup should be part 
+            of standard maintenance. Automated profile management through Group Policy 
+            — specifically the <strong>Delete cached copies of roaming profiles</strong> 
+            and <strong>Limit profile size</strong> settings — can prevent this class of 
+            failure from recurring without manual intervention.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>© 2026 Signal & Systems</footer>
+
+  </div>
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
