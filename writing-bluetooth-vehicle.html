@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vehicle Bluetooth Security | Signal & Systems</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+<div class="shell">
+
+  <aside class="rail">
+    <div class="mark">S/S</div>
+    <div class="rail-text">Systems • Signals • Security</div>
+  </aside>
+
+  <div class="content">
+
+    <header class="site-header">
+      <a href="index.html" class="brand">
+        <div class="brand-title">Signal & Systems</div>
+        <div class="brand-subtitle">Infrastructure Portfolio</div>
+      </a>
+      <button class="nav-toggle">☰</button>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resume.html">Resume & Credentials</a>
+        <a href="history.html">Professional History</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html" class="active">Writing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Technical writing / wireless security</p>
+          <h1>What Data Does My Vehicle Bluetooth System Access, and What Are the Implications?</h1>
+          <p class="hero-copy">
+            Most drivers treat their car's Bluetooth system as a convenience feature.
+            From a security perspective, it is an always-on wireless receiver that stores
+            personal data, broadcasts its presence continuously, and in many implementations
+            has not received a security update since it left the factory.
+          </p>
+        </div>
+
+        <aside class="note-card">
+          <h2>Article details</h2>
+          <p><strong>Category:</strong> Wireless Security / IoT</p>
+          <p><strong>Subject:</strong> 2015 Honda Civic Hands-Free Link</p>
+          <p><strong>Concepts:</strong> Bluetooth, OBEX, Bluesnarfing, KNOB attack, BR/EDR</p>
+          <a href="writing.html" class="btn">← Back to Writing</a>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>More than just audio</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            A 2015 Honda Civic with Hands-Free Link does not simply stream audio over
+            Bluetooth. When a phone pairs with the system, it synchronizes the entire
+            contact list to the vehicle's internal storage. This means the Bluetooth
+            connection supports OBEX — Object Exchange protocol — which is the
+            file transfer layer that sits on top of the Bluetooth stack. The contacts
+            are stored in the head unit and persist there even after the phone
+            disconnects. This expands the attack surface considerably beyond what
+            most users assume.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Bluetooth versions and their limitations</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Bluetooth 3.0, used in vehicles from this era, uses the BR/EDR protocol —
+            Basic Rate Enhanced Data Rate — operating in the 2.4GHz ISM band across
+            79 frequency channels using frequency hopping spread spectrum. The
+            encryption standard is E0 stream cipher, which has documented weaknesses.
+            Later versions of Bluetooth moved to AES-CCM encryption, which is
+            significantly stronger. The practical implication is that older vehicle
+            Bluetooth implementations use a weaker encryption standard that modern
+            attack tooling can potentially exploit.
+          </p>
+          <p>
+            Bluetooth 4.0 improved the encryption but introduced BLE — Bluetooth Low
+            Energy — which has its own attack surface involving advertising packets
+            that broadcast device identity continuously. Bluetooth 5.0 extended range
+            significantly, up to 400 meters under ideal conditions, which means the
+            assumption that an attacker must be immediately adjacent to the target
+            vehicle is not always accurate.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The parking lot scenario</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            When a previously paired phone comes within range of the vehicle, the
+            system initiates reconnection automatically and without user confirmation.
+            During this process the vehicle broadcasts its Bluetooth MAC address and
+            device name — sufficient information to identify the head unit model and
+            narrow the applicable vulnerability profile.
+          </p>
+          <p>
+            An attacker in an adjacent parking space with a Bluetooth-capable laptop
+            running Kali Linux could attempt several things. Device discovery using
+            hcitool or btscanner reveals paired and discoverable devices within range.
+            A Bluesnarfing attempt using obexftp targets the OBEX file transfer
+            capability to pull contact lists, call logs, and messages from vulnerable
+            implementations without triggering any notification on the target device.
+            A KNOB attack — Key Negotiation of Bluetooth — exploits a vulnerability
+            in the Bluetooth pairing negotiation process to downgrade the encryption
+            key length to as little as one byte, making brute force decryption trivial.
+          </p>
+          <p>
+            The scenario in which an attacker who cannot execute a direct phishing
+            attack instead targets the Bluetooth connection while the owner approaches
+            their vehicle is a documented threat vector in security research. Whether
+            a specific head unit is vulnerable depends on the firmware version, which
+            Honda does not provide over-the-air updates for on a 2015 model.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>What the user cannot see</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The contact list synchronization happens silently. There is no notification
+            that personal data is being transmitted wirelessly. There is no log of what
+            was sent or when. If the data is intercepted in transit or extracted from
+            the head unit, the vehicle owner would have no visibility into the event.
+          </p>
+          <p>
+            This is the broader IoT problem applied to vehicles. The device performs a
+            function that requires data transmission, the transmission happens
+            automatically, and the user has no observability into what was sent, where
+            it went, or how it was protected in transit.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Defensive posture for older vehicle Bluetooth</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Disabling Bluetooth on the phone when it is not actively in use prevents
+            the automatic reconnection broadcast that creates the primary exposure
+            window. Clearing old paired devices from the head unit periodically reduces
+            the stored data available if the unit is ever accessed. Being aware that
+            the vehicle is advertising itself to every Bluetooth-capable device within
+            range in public parking areas is the first step toward making an informed
+            decision about acceptable risk.
+          </p>
+          <p>
+            These are not perfect mitigations. They reduce passive exposure without
+            eliminating it. A system designed to connect automatically and synchronize
+            data without friction will continue to do so whether the user intends it
+            or not, and whether the initiating device belongs to the owner or to
+            someone else within range.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Operational lesson</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Convenience and security exist in tension across every connected device.
+            A vehicle infotainment system designed to pair seamlessly and synchronize
+            contacts automatically is also a system that does those things regardless
+            of who initiates the connection. Understanding what data a device accesses,
+            how it transmits that data, and what protections are in place is not
+            paranoia — it is the baseline of informed technology use.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>© 2026 Signal & Systems</footer>
+
+  </div>
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
