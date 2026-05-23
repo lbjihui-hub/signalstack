@@ -25,500 +25,229 @@
 
 <div class="shell">
 
-  <!-- LEFT RAIL -->
-
   <aside class="rail">
-
-    <div class="mark">
-      S/S
-    </div>
-
-    <div class="rail-text">
-      Systems • Signals • Security
-    </div>
-
+    <div class="mark">S/S</div>
+    <div class="rail-text">Systems • Signals • Security</div>
   </aside>
-
-  <!-- MAIN CONTENT -->
 
   <div class="content">
 
-    <!-- HEADER -->
-
     <header class="site-header">
-
-      <a
-        href="index.html"
-        class="brand"
-      >
-
-        <div class="brand-title">
-          Signal & Systems
-        </div>
-
-        <div class="brand-subtitle">
-          Infrastructure Portfolio
-        </div>
-
+      <a href="index.html" class="brand">
+        <div class="brand-title">Signal & Systems</div>
+        <div class="brand-subtitle">Infrastructure Portfolio</div>
       </a>
-
-      <button class="nav-toggle">
-        ☰
-      </button>
-
-      <nav
-        class="main-nav"
-        id="main-nav"
-      >
-
-        <a href="index.html">
-          Home
-        </a>
-
-        <a href="about.html">
-          About
-        </a>
-
-        <a href="resume.html">
-          Resume & Credentials
-        </a>
-
-        <a href="history.html">
-          Professional History
-        </a>
-
-        <a href="projects.html">
-          Projects
-        </a>
-
-        <a
-          href="writing.html"
-          class="active"
-        >
-          Writing
-        </a>
-
-        <a href="contact.html">
-          Contact
-        </a>
-
+      <button class="nav-toggle">☰</button>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resume.html">Resume & Credentials</a>
+        <a href="history.html">Professional History</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html" class="active">Writing</a>
+        <a href="contact.html">Contact</a>
       </nav>
-
     </header>
-
-    <!-- MAIN -->
 
     <main>
 
-      <!-- HERO -->
-
       <section class="hero">
-
         <div>
-
-          <p class="eyebrow">
-            Technical writing / notes / observations
-          </p>
-
-          <h1>
-
-            Documentation, architecture thinking, operational observations, and technical research notes.
-
-          </h1>
-
+          <p class="eyebrow">Technical writing / notes / observations</p>
+          <h1>Documentation, architecture thinking, operational observations, and technical research notes.</h1>
           <p class="hero-copy">
-
-            This section serves as a knowledge archive for technical observations, research-oriented thinking, infrastructure notes, operational security concepts, and enterprise systems analysis.
-
+            This section serves as a knowledge archive for technical observations, 
+            research-oriented thinking, infrastructure notes, operational security 
+            concepts, and enterprise systems analysis.
           </p>
-
         </div>
 
-        <!-- SIDE CARD -->
-
         <aside class="note-card">
-
-          <h2>
-            Writing philosophy
-          </h2>
-
+          <h2>Writing philosophy</h2>
           <p>
-
-            Technical writing is one of the clearest ways to demonstrate understanding. The goal is not simply to memorize terminology, but to explain systems, tradeoffs, communication patterns, architecture decisions, and operational reasoning.
-
+            Technical writing is one of the clearest ways to demonstrate understanding. 
+            The goal is not simply to memorize terminology, but to explain systems, 
+            tradeoffs, communication patterns, architecture decisions, and operational 
+            reasoning.
           </p>
-
         </aside>
-
       </section>
 
-      <!-- ARTICLES -->
-
       <section class="panel">
-
         <div class="section-head">
-
-          <h2>
-            Featured writing
-          </h2>
-
-          <p>
-
-            Current and planned technical articles, research notes, and operational observations.
-
-          </p>
-
+          <h2>Featured writing</h2>
+          <p>Technical articles, research notes, and operational observations.</p>
         </div>
 
         <div class="card-grid">
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Infrastructure
-            </span>
-
-            <h3>
-              Disk exhaustion and Windows login failures
-            </h3>
-
+            <span class="tag">Infrastructure</span>
+            <h3>Disk exhaustion and Windows login failures</h3>
             <p>
               How accumulated stale user profiles on domain-joined endpoints consumed 
               available disk space and caused the Windows Profile Service to fail — 
               and the registry-level resolution that restored access.
             </p>
-
-            <a href="writing-profile-disk.html" class="btn">
-              Read article
-            </a>
-
-    
+            <a href="writing-profile-disk.html" class="btn">Read article</a>
           </article>
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Networking
-            </span>
-
-            <h3>
-              What is my IoT device communicating with?
-            </h3>
-
+            <span class="tag">Endpoint Security</span>
+            <h3>HIDS vs HIPS operational tradeoffs</h3>
             <p>
-
-              Observing DNS behavior, cloud communication intervals, protocol usage, segmentation strategy, and privacy considerations involving consumer smart home devices.
-
+              Detection versus prevention in resource-constrained enterprise 
+              environments — operational impact, false positive risk, CVSS context, 
+              and when each approach is the right answer.
             </p>
-
+            <a href="writing-hids-hips.html" class="btn">Read article</a>
           </article>
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Infrastructure
-            </span>
-
-            <h3>
-              Building a Windows enterprise lab
-            </h3>
-
+            <span class="tag">Networking</span>
+            <h3>What is my IoT device communicating with?</h3>
             <p>
-
-              Planning and documenting a small enterprise-style environment involving Active Directory, Group Policy, organizational units, endpoint management, and operational administration.
-
+              Observing DNS behavior, cloud communication intervals, protocol usage, 
+              segmentation strategy, and privacy considerations involving consumer 
+              smart home devices.
             </p>
-
           </article>
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Wireless
-            </span>
-
-            <h3>
-              Bluetooth trust boundaries in consumer vehicles
-            </h3>
-
+            <span class="tag">Infrastructure</span>
+            <h3>Building a Windows enterprise lab</h3>
             <p>
-
-              Research-oriented observations regarding Bluetooth pairing behavior, wireless trust assumptions, infotainment exposure, and connected device architecture.
-
+              Planning and documenting a small enterprise-style environment involving 
+              Active Directory, Group Policy, organizational units, endpoint management, 
+              and operational administration.
             </p>
-
           </article>
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Monitoring
-            </span>
-
-            <h3>
-              SIEM concepts and operational telemetry
-            </h3>
-
+            <span class="tag">Wireless</span>
+            <h3>Bluetooth trust boundaries in consumer vehicles</h3>
             <p>
-
-              Notes concerning centralized monitoring, alert fatigue, event correlation, endpoint telemetry, operational visibility, and detection workflows.
-
+              Research-oriented observations regarding Bluetooth pairing behavior, 
+              wireless trust assumptions, infotainment exposure, and connected device 
+              architecture.
             </p>
-
           </article>
 
-          <!-- ARTICLE -->
-
           <article class="card">
-
-            <span class="tag">
-              Cloud
-            </span>
-
-            <h3>
-              Microsoft cloud administration notes
-            </h3>
-
+            <span class="tag">Monitoring</span>
+            <h3>SIEM concepts and operational telemetry</h3>
             <p>
-
-              Azure fundamentals, Microsoft 365 concepts, identity integration, governance awareness, and cloud-connected operational environments.
-
+              Notes concerning centralized monitoring, alert fatigue, event correlation, 
+              endpoint telemetry, operational visibility, and detection workflows.
             </p>
-
           </article>
 
         </div>
-
       </section>
 
-      <!-- WRITING THEMES -->
-
       <section class="panel">
-
         <div class="section-head">
-
-          <h2>
-            Research themes
-          </h2>
-
-          <p>
-
-            Questions and concepts currently influencing technical study and experimentation.
-
-          </p>
-
+          <h2>Research themes</h2>
+          <p>Questions and concepts currently influencing technical study and experimentation.</p>
         </div>
 
         <div class="card-grid">
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Observation
-            </span>
-
-            <h3>
-              What is communicating?
-            </h3>
-
+            <span class="tag">Observation</span>
+            <h3>What is communicating?</h3>
             <p>
-
-              Understanding which systems communicate with one another, how frequently they communicate, what protocols they use, and what assumptions exist underneath trust relationships.
-
+              Understanding which systems communicate with one another, how frequently 
+              they communicate, what protocols they use, and what assumptions exist 
+              underneath trust relationships.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Architecture
-            </span>
-
-            <h3>
-              How are systems segmented?
-            </h3>
-
+            <span class="tag">Architecture</span>
+            <h3>How are systems segmented?</h3>
             <p>
-
-              Exploring VLAN concepts, endpoint isolation, IoT containment, guest networking, wireless trust boundaries, and operational separation between systems.
-
+              Exploring VLAN concepts, endpoint isolation, IoT containment, guest 
+              networking, wireless trust boundaries, and operational separation 
+              between systems.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Security
-            </span>
-
-            <h3>
-              What are the tradeoffs?
-            </h3>
-
+            <span class="tag">Security</span>
+            <h3>What are the tradeoffs?</h3>
             <p>
-
-              Security decisions always involve tradeoffs involving usability, monitoring visibility, operational overhead, performance impact, and acceptable organizational risk.
-
+              Security decisions always involve tradeoffs involving usability, 
+              monitoring visibility, operational overhead, performance impact, 
+              and acceptable organizational risk.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Documentation
-            </span>
-
-            <h3>
-              Turning study into artifacts
-            </h3>
-
+            <span class="tag">Documentation</span>
+            <h3>Turning study into artifacts</h3>
             <p>
-
-              Technical notes, diagrams, architecture sketches, screenshots, and written explanation transform passive learning into visible demonstrations of capability.
-
+              Technical notes, diagrams, architecture sketches, screenshots, and 
+              written explanation transform passive learning into visible 
+              demonstrations of capability.
             </p>
-
           </article>
 
         </div>
-
       </section>
 
-      <!-- FUTURE CONTENT -->
-
       <section class="panel">
-
         <div class="section-head">
-
-          <h2>
-            Planned future writing
-          </h2>
-
-          <p>
-
-            Topics intended for future publication and portfolio expansion.
-
-          </p>
-
+          <h2>Planned future writing</h2>
+          <p>Topics intended for future publication and portfolio expansion.</p>
         </div>
 
         <div class="card-grid">
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Identity
-            </span>
-
-            <h3>
-              Identity as the new perimeter
-            </h3>
-
+            <span class="tag">Identity</span>
+            <h3>Identity as the new perimeter</h3>
             <p>
-
-              Examining modern enterprise identity systems, MFA, conditional access, authentication workflows, and operational trust relationships.
-
+              Examining modern enterprise identity systems, MFA, conditional access, 
+              authentication workflows, and operational trust relationships.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Endpoint Operations
-            </span>
-
-            <h3>
-              Endpoint telemetry and visibility
-            </h3>
-
+            <span class="tag">Wireless</span>
+            <h3>Bluetooth attack surfaces</h3>
             <p>
-
-              Research concerning endpoint monitoring, logging strategy, operational telemetry, and centralized visibility concepts.
-
+              Bluesnarfing, trust boundary assumptions, vehicle infotainment exposure, 
+              and the operational security implications of consumer Bluetooth devices.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Networking
-            </span>
-
-            <h3>
-              IPv4 and IPv6 operational behavior
-            </h3>
-
+            <span class="tag">Networking</span>
+            <h3>IPv4 and IPv6 operational behavior</h3>
             <p>
-
-              Notes concerning addressing behavior, broadcast activity, neighbor discovery, communication visibility, and operational troubleshooting.
-
+              Notes concerning addressing behavior, broadcast activity, neighbor 
+              discovery, communication visibility, and operational troubleshooting.
             </p>
-
           </article>
 
-          <!-- CARD -->
-
           <article class="card">
-
-            <span class="tag">
-              Infrastructure
-            </span>
-
-            <h3>
-              Enterprise operational design
-            </h3>
-
+            <span class="tag">Infrastructure</span>
+            <h3>Enterprise operational design</h3>
             <p>
-
-              Research-oriented thinking involving enterprise architecture, redundancy concepts, segmentation strategy, governance, and operational scalability.
-
+              Research-oriented thinking involving enterprise architecture, redundancy 
+              concepts, segmentation strategy, governance, and operational scalability.
             </p>
-
           </article>
 
         </div>
-
       </section>
 
     </main>
 
-    <!-- FOOTER -->
-
-    <footer>
-      © 2026 Signal & Systems
-    </footer>
+    <footer>© 2026 Signal & Systems</footer>
 
   </div>
-
 </div>
 
 <script src="assets/js/main.js"></script>
