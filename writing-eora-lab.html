@@ -59,6 +59,23 @@
 
       <section class="panel">
         <div class="section-head">
+          <h2>Architecture overview</h2>
+          <p>
+            The full four-phase build plan at a glance — from network foundation 
+            through hybrid cloud integration.
+          </p>
+        </div>
+        <div class="note-card">
+          <img 
+            src="eora-lab-diagram.png" 
+            alt="Eora lab architecture diagram showing four phases from network foundation through hybrid cloud integration, with each phase mapping fictional YoRHa unit designations to real Windows Server roles" 
+            style="width:100%; border-radius:8px; display:block;"
+          />
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
           <h2>Why design before you build</h2>
         </div>
         <div class="note-card">
@@ -259,33 +276,25 @@
         <div class="note-card">
           <p>
             Every role inside the Eora command structure maps to a real Windows Server 
-            role or enterprise service. The following table documents the intended 
-            architecture across all unit designations, identifying what each functional 
-            type represents in infrastructure terms and which phase of the lab 
-            implements it.
-          </p>
-          <p>
-            This mapping exercise is not aesthetic. It is a forcing function for 
-            thinking clearly about what each service does, why it exists, and what 
-            depends on it. An environment where every role is understood at the design 
-            level before implementation begins is an environment that fails less and 
-            recovers faster.
+            role or enterprise service. The table below documents the full intended 
+            architecture, what each designation represents in infrastructure terms, 
+            and which phase implements it.
           </p>
 
           <table style="width:100%; border-collapse:collapse; margin-top:1.5rem; font-size:0.85rem;">
             <thead>
               <tr style="border-bottom: 2px solid var(--border);">
-                <th style="text-align:left; padding:0.6rem 0.8rem;">Unit Designation</th>
-                <th style="text-align:left; padding:0.6rem 0.8rem;">Server Role / Service</th>
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Unit designation</th>
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Server role / service</th>
                 <th style="text-align:left; padding:0.6rem 0.8rem;">Function</th>
                 <th style="text-align:left; padding:0.6rem 0.8rem;">Phase</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom: 1px solid var(--border); background: var(--surface-alt, #f5f5f5);">
-                <td style="padding:0.6rem 0.8rem;">Sea Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Network Infrastructure</td>
-                <td style="padding:0.6rem 0.8rem;">Underlying transport layer — prerequisite for all other phases</td>
+                <td style="padding:0.6rem 0.8rem;">Sea assets</td>
+                <td style="padding:0.6rem 0.8rem;">Network infrastructure</td>
+                <td style="padding:0.6rem 0.8rem;">Underlying transport layer — prerequisite for all phases</td>
                 <td style="padding:0.6rem 0.8rem;">Foundation</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
@@ -295,116 +304,32 @@
                 <td style="padding:0.6rem 0.8rem;">Phase 1</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Land Based Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Domain-joined Workstations</td>
+                <td style="padding:0.6rem 0.8rem;">Land based assets</td>
+                <td style="padding:0.6rem 0.8rem;">Domain-joined workstations</td>
                 <td style="padding:0.6rem 0.8rem;">On premises endpoints within the internal network</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 1</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Administrative Models</td>
-                <td style="padding:0.6rem 0.8rem;">Delegated AD Administration / RBAC</td>
+                <td style="padding:0.6rem 0.8rem;">Administrative models</td>
+                <td style="padding:0.6rem 0.8rem;">Delegated AD administration / RBAC</td>
                 <td style="padding:0.6rem 0.8rem;">Scoped administrative access without full domain authority</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 1</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
                 <td style="padding:0.6rem 0.8rem;">Handlers</td>
-                <td style="padding:0.6rem 0.8rem;">Remote Desktop Services / VPN Gateway</td>
+                <td style="padding:0.6rem 0.8rem;">Remote Desktop Services / VPN gateway</td>
                 <td style="padding:0.6rem 0.8rem;">Communication links with remote field assets</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 2</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Maintenance Units</td>
+                <td style="padding:0.6rem 0.8rem;">Maintenance units</td>
                 <td style="padding:0.6rem 0.8rem;">Windows Server Update Services</td>
                 <td style="padding:0.6rem 0.8rem;">Patch distribution and endpoint health maintenance</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 2</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Manufacturer Models</td>
+                <td style="padding:0.6rem 0.8rem;">Manufacturer models</td>
                 <td style="padding:0.6rem 0.8rem;">Certificate Authority — AD CS</td>
                 <td style="padding:0.6rem 0.8rem;">Issuing trusted identities and certificates</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 2</td>
               </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Pods</td>
-                <td style="padding:0.6rem 0.8rem;">Endpoint Management Agents</td>
-                <td style="padding:0.6rem 0.8rem;">Always-present telemetry and command execution</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Scanner Units</td>
-                <td style="padding:0.6rem 0.8rem;">SIEM — Wazuh / Security Onion</td>
-                <td style="padding:0.6rem 0.8rem;">Continuous observation, anomaly detection, reporting</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Gunner / Defender Models</td>
-                <td style="padding:0.6rem 0.8rem;">HIPS / Windows Defender ATP / Firewall</td>
-                <td style="padding:0.6rem 0.8rem;">Active threat response and endpoint protection</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Air Based Assets</td>
-                <td style="padding:0.6rem 0.8rem;">MDM-managed Mobile Devices</td>
-                <td style="padding:0.6rem 0.8rem;">Wireless and mobile endpoints under central management</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
-              </tr>
-              <tr>
-                <td style="padding:0.6rem 0.8rem;">Flight Units</td>
-                <td style="padding:0.6rem 0.8rem;">Azure Arc / Cloud Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Remote assets reporting to command from outside the perimeter</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 4</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p style="margin-top:1.5rem;">
-            Network infrastructure is a prerequisite that exists before the lab build 
-            begins — it is not a phase, it is the foundation everything else runs on. 
-            Phase 1 establishes the domain — domain controller, DNS, DHCP, 
-            organizational units, Group Policy, workstation domain join, and delegated 
-            administration. Phases 2 through 4 expand the environment progressively 
-            as each component is implemented and documented.
-          </p>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="section-head">
-          <h2>What this lab proves</h2>
-        </div>
-        <div class="note-card">
-          <p>
-            A hiring manager or technical reviewer looking at this environment sees 
-            someone who understands that Active Directory is not just a place to 
-            create user accounts. It is an identity and access management platform, 
-            a policy enforcement engine, a DNS namespace, a replication topology, 
-            and an organizational framework — all operating simultaneously.
-          </p>
-          <p>
-            The design decisions documented here — OU structure, GPO scope, security 
-            group versus distribution group, DHCP role placement, DNS integration, 
-            DMZ segmentation, server role mapping — are the decisions that systems 
-            administrators and security engineers make in production environments 
-            every day.
-          </p>
-          <p>
-            The lab starts small. The design thinks at scale. That gap is intentional 
-            and honest.
-          </p>
-          <p>
-            Part two will document the actual implementation — domain controller 
-            promotion, OU creation, GPO configuration, client domain join, and the 
-            first security events generated and detected in the environment.
-          </p>
-        </div>
-      </section>
-
-    </main>
-
-    <footer>© 2026 Signal & Systems</footer>
-
-  </div>
-</div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
