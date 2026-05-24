@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building the Eora Lab | Signal & Systems</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+<div class="shell">
+
+  <aside class="rail">
+    <div class="mark">S/S</div>
+    <div class="rail-text">Systems • Signals • Security</div>
+  </aside>
+
+  <div class="content">
+
+    <header class="site-header">
+      <a href="index.html" class="brand">
+        <div class="brand-title">Signal & Systems</div>
+        <div class="brand-subtitle">Infrastructure Portfolio</div>
+      </a>
+      <button class="nav-toggle">☰</button>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resume.html">Resume & Credentials</a>
+        <a href="history.html">Professional History</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html" class="active">Writing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Technical writing / infrastructure / lab design</p>
+          <h1>Building the Eora Lab: Planning a Windows Server Enterprise Environment</h1>
+          <p class="hero-copy">
+            Part one of a multi-phase lab documentation series. Architecture, design 
+            decisions, organizational unit structure, server role mapping, and the 
+            reasoning behind every choice — before a single command is run.
+          </p>
+        </div>
+
+        <aside class="note-card">
+          <h2>Lab details</h2>
+          <p><strong>Environment:</strong> Windows Server 2025, VirtualBox, Windows 11 client</p>
+          <p><strong>Forest:</strong> eora.command</p>
+          <p><strong>Phase:</strong> 1 of 4 — Planning and initial domain build</p>
+          <p><strong>Concepts:</strong> AD DS, DNS, DHCP, GPO, OU design, RBAC, DMZ</p>
+          <a href="writing.html" class="btn">← Back to Writing</a>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Why design before you build</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Every enterprise Active Directory environment begins as a design problem 
+            before it becomes a technical one. Before a single server is provisioned, 
+            someone has to answer a set of questions. What is the organizational 
+            structure? How are resources divided? Who administers what? What fails 
+            if a single node goes down? What is isolated from what, and why?
+          </p>
+          <p>
+            This document is the planning phase for a home lab environment built on 
+            Windows Server 2025, designed around Active Directory Domain Services, 
+            DNS, DHCP, Group Policy, and organizational unit structure. The lab is 
+            small by necessity — one physical host, VirtualBox as the hypervisor, 
+            limited RAM allocation — but the design decisions behind it reflect how 
+            enterprise environments are actually architected, not how lab tutorials 
+            present them.
+          </p>
+          <p>
+            The environment is named Eora. The forest root domain is eora.command. 
+            The naming is borrowed from the world of Nier Automata, where YoRHa 
+            Command operated a network of orbital bunkers serving different strategic 
+            functions — each one a node in a larger command structure, each one 
+            capable of independent operation, each one theoretically redundant. 
+            The fictional architecture is a reasonable mental model for what Active 
+            Directory is actually doing underneath the surface.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Forest, domain, and the single point of failure problem</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            In Active Directory, a forest is the outermost boundary. It contains 
+            one schema — the definition of every object type that can exist in the 
+            directory — and one global catalog that indexes objects across all domains 
+            within the forest. Everything inside the forest operates under a common 
+            trust framework. Domains within the forest automatically trust each other 
+            through transitive trust relationships, which means a user authenticated 
+            in one domain can access resources in another without a separate 
+            authentication event.
+          </p>
+          <p>
+            The Eora forest contains one domain at this stage: eora.command. This 
+            is the forest root domain and it will host the primary domain controller. 
+            In a production enterprise environment you would never run a forest with 
+            a single domain controller, because a single domain controller is a single 
+            point of failure. If it goes down, authentication stops. Group Policy stops 
+            applying. DNS resolution for domain resources stops. The entire environment 
+            depends on one machine continuing to function.
+          </p>
+          <p>
+            This is exactly the architectural flaw at the center of Nier Automata's 
+            command structure. One bunker. One point of failure. When it fell, 
+            everything fell with it. In enterprise AD design the answer is multiple 
+            domain controllers per domain, distributed across physical locations or 
+            at minimum across separate hardware, replicating directory changes to 
+            each other continuously through a process managed by the Knowledge 
+            Consistency Checker. If one domain controller fails the others continue 
+            operating transparently. The lab starts with one domain controller because 
+            the physical host has constraints. The design acknowledges the limitation 
+            and documents why a production version of this environment would look 
+            different.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Organizational units and the android designation model</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Inside eora.command, the directory structure is organized around three 
+            top-level organizational units that correspond to functional android 
+            designations: Combat, Support, and Technical. Each OU contains the user 
+            accounts, computer objects, and groups associated with that function.
+          </p>
+          <p>
+            Organizational units are containers. They hold objects and they are the 
+            attachment points for Group Policy Objects. A GPO linked to the Combat OU 
+            applies to every user and computer inside that OU automatically. This is 
+            how enterprise environments enforce configuration at scale without touching 
+            individual machines. The policy propagates from the domain controller to 
+            every object in scope at the next Group Policy refresh cycle, which by 
+            default occurs every ninety minutes for computers and at logon for users.
+          </p>
+          <p>
+            The Combat OU contains accounts for endpoint operators. The GPO applied 
+            here enforces strict desktop restrictions — no access to Control Panel, 
+            no ability to install software, a mandatory screensaver timeout with 
+            password lock, and USB storage device restrictions. These users need to 
+            do their job and nothing else. The principle of least privilege applied 
+            at the policy level.
+          </p>
+          <p>
+            The Support OU contains accounts for logistics and administrative support 
+            functions. The GPO here is less restrictive but still enforces password 
+            complexity requirements, drive mappings to shared network resources, and 
+            printer assignments based on physical location.
+          </p>
+          <p>
+            The Technical OU contains accounts for IT administrators and technicians. 
+            The GPO here applies baseline security settings but does not restrict 
+            administrative tools. Members of the Technical security group have delegated 
+            administrative rights over their respective OUs — they can reset passwords 
+            and unlock accounts for users in their scope without having full domain 
+            administrator privileges. This is administrative delegation, which is how 
+            large environments avoid giving everyone the keys to everything.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Security groups and distribution groups</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Inside each OU, security groups define what resources users can access. 
+            The distinction between a security group and a distribution group is worth 
+            stating plainly. A security group is an access control object. You assign 
+            permissions to the group and add users to the group. The user inherits 
+            the permissions through membership. A distribution group is an email list. 
+            It has no security function and cannot be used to assign permissions to 
+            anything.
+          </p>
+          <p>
+            If you need both email distribution and resource access control for the 
+            same set of users, you use a security group, which can serve both purposes. 
+            The Eora lab uses security groups for VPN access control, shared folder 
+            permissions, and administrative delegation. Distribution groups are 
+            configured for departmental email routing through a locally hosted Exchange 
+            instance planned for a later phase.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>DNS and DHCP</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The domain controller runs DNS for the eora.command domain. Active 
+            Directory is tightly integrated with DNS and requires it to function. 
+            Every domain join, every authentication event, every Group Policy 
+            application depends on DNS resolving domain controller records correctly. 
+            The domain controller registers its own SRV records in DNS automatically 
+            during promotion, which is how client machines locate domain controllers 
+            when they need to authenticate.
+          </p>
+          <p>
+            DHCP assigns IP addresses to client machines joining the domain. In this 
+            lab the domain controller runs the DHCP role as well, which is acceptable 
+            for a single-server lab environment. In production this role would typically 
+            live on a dedicated server or be handled at the network infrastructure level. 
+            If the domain controller goes down and it is also your DHCP server, new 
+            devices cannot get IP addresses. Separation of roles prevents that dependency.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The DMZ and network segmentation</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The planned network architecture includes a screened subnet — historically 
+            called a DMZ, demilitarized zone — that separates any externally facing 
+            services from the internal domain network. In the Eora design this segment 
+            hosts a VPN gateway and eventually an Exchange edge transport server. 
+            Traffic from outside the network reaches the DMZ. Traffic from the DMZ 
+            to the internal network is controlled by firewall rules on both sides. 
+            Compromise of a DMZ host does not grant automatic access to internal 
+            domain resources because the internal firewall treats the DMZ as an 
+            untrusted network.
+          </p>
+          <p>
+            In the lab this is simulated through VirtualBox network adapter 
+            configuration. The domain controller sits on an internal host-only network. 
+            A separate adapter on a NAT network simulates the external connection. 
+            The segmentation is logical rather than physical but the concepts it 
+            demonstrates are identical to production implementation.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Unit designations and server role mapping</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Every role inside the Eora command structure maps to a real Windows Server 
+            role or enterprise service. The following table documents the intended 
+            architecture across all unit designations, identifying what each functional 
+            type represents in infrastructure terms and which phase of the lab 
+            implements it.
+          </p>
+          <p>
+            This mapping exercise is not aesthetic. It is a forcing function for 
+            thinking clearly about what each service does, why it exists, and what 
+            depends on it. An environment where every role is understood at the design 
+            level before implementation begins is an environment that fails less and 
+            recovers faster.
+          </p>
+
+          <table style="width:100%; border-collapse:collapse; margin-top:1.5rem; font-size:0.85rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border);">
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Unit Designation</th>
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Server Role / Service</th>
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Function</th>
+                <th style="text-align:left; padding:0.6rem 0.8rem;">Phase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Commanders</td>
+                <td style="padding:0.6rem 0.8rem;">Active Directory Domain Services</td>
+                <td style="padding:0.6rem 0.8rem;">Authentication, policy enforcement, directory authority</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Handlers</td>
+                <td style="padding:0.6rem 0.8rem;">Remote Desktop Services / VPN Gateway</td>
+                <td style="padding:0.6rem 0.8rem;">Communication links with remote field assets</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Maintenance Units</td>
+                <td style="padding:0.6rem 0.8rem;">Windows Server Update Services</td>
+                <td style="padding:0.6rem 0.8rem;">Patch distribution and endpoint health maintenance</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Pods</td>
+                <td style="padding:0.6rem 0.8rem;">Endpoint Management Agents</td>
+                <td style="padding:0.6rem 0.8rem;">Always-present telemetry and command execution</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Scanner Units</td>
+                <td style="padding:0.6rem 0.8rem;">SIEM — Wazuh / Security Onion</td>
+                <td style="padding:0.6rem 0.8rem;">Continuous observation, anomaly detection, reporting</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Gunner / Defender Models</td>
+                <td style="padding:0.6rem 0.8rem;">HIPS / Windows Defender ATP / Firewall</td>
+                <td style="padding:0.6rem 0.8rem;">Active threat response and endpoint protection</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Manufacturer Models</td>
+                <td style="padding:0.6rem 0.8rem;">Certificate Authority — AD CS</td>
+                <td style="padding:0.6rem 0.8rem;">Issuing trusted identities and certificates</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Flight Units</td>
+                <td style="padding:0.6rem 0.8rem;">Azure Arc / Cloud Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Remote assets reporting to command from outside the perimeter</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 4</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Land Based Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Domain-joined Workstations</td>
+                <td style="padding:0.6rem 0.8rem;">On premises endpoints within the internal network</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Sea Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Network Infrastructure</td>
+                <td style="padding:0.6rem 0.8rem;">Underlying transport layer — invisible but foundational</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Air Based Assets</td>
+                <td style="padding:0.6rem 0.8rem;">MDM-managed Mobile Devices</td>
+                <td style="padding:0.6rem 0.8rem;">Wireless and mobile endpoints under central management</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 3</td>
+              </tr>
+              <tr>
+                <td style="padding:0.6rem 0.8rem;">Administrative Models</td>
+                <td style="padding:0.6rem 0.8rem;">Delegated AD Administration / RBAC</td>
+                <td style="padding:0.6rem 0.8rem;">Scoped administrative access without full domain authority</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:1.5rem;">
+            Phase 1 is the current lab build — domain controller, DNS, DHCP, 
+            organizational units, Group Policy, and domain-joined workstations. 
+            Phases 2 through 4 are documented here as planned architecture, 
+            providing a roadmap for lab expansion as each component is implemented 
+            and documented.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>What this lab proves</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            A hiring manager or technical reviewer looking at this environment sees 
+            someone who understands that Active Directory is not just a place to 
+            create user accounts. It is an identity and access management platform, 
+            a policy enforcement engine, a DNS namespace, a replication topology, 
+            and an organizational framework — all operating simultaneously.
+          </p>
+          <p>
+            The design decisions documented here — OU structure, GPO scope, security 
+            group versus distribution group, DHCP role placement, DNS integration, 
+            DMZ segmentation, server role mapping — are the decisions that systems 
+            administrators and security engineers make in production environments 
+            every day.
+          </p>
+          <p>
+            The lab starts small. The design thinks at scale. That gap is intentional 
+            and honest.
+          </p>
+          <p>
+            Part two will document the actual implementation — domain controller 
+            promotion, OU creation, GPO configuration, client domain join, and the 
+            first security events generated and detected in the environment.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>© 2026 Signal & Systems</footer>
+
+  </div>
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
