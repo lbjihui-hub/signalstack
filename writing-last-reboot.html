@@ -49,3 +49,193 @@
         </div>
 
         <aside class="note-card">
+          <h2>Article details</h2>
+          <p><strong>Category:</strong> Infrastructure / Hardware / Diagnostics</p>
+          <p><strong>Environment:</strong> Windows 7 enterprise endpoint, managed fleet</p>
+          <p><strong>Concepts:</strong> Disk utilization, mechanical HDD constraints, documentation, escalation</p>
+          <a href="writing.html" class="btn">← Back to Writing</a>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The ticket</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            There is a particular kind of service desk ticket that looks simple on the 
+            surface and is not. The user reports that their computer is slow. They have 
+            been reporting it for weeks. You have been assigned the ticket again. The 
+            expectation, unstated but understood, is that you will do something and 
+            close it.
+          </p>
+          <p>
+            This is the story of one of those tickets, what the machine was actually 
+            telling me, what I did about it, and what happened when someone with 
+            authority decided my answer was wrong without understanding the question.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The machine</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The endpoint in question was a fourth-generation Intel Core i5 workstation 
+            with four gigabytes of RAM and a mechanical hard disk drive running Windows 7. 
+            In an enterprise environment where endpoint refresh cycles run three to five 
+            years and budget constraints routinely extend that further, this configuration 
+            was not unusual. It was, however, asking more of its hardware than its hardware 
+            could deliver.
+          </p>
+          <p>
+            A mechanical hard drive has a physical read/write head that moves across a 
+            spinning platter to access data. When Windows boots, it loads the operating 
+            system, initializes background services, applies group policy, runs startup 
+            scripts, and begins synchronizing with enterprise management tools — all 
+            simultaneously. On a solid-state drive this sequence takes seconds. On a 
+            spinning disk with a queue of competing read requests, it takes minutes. 
+            Disk utilization hitting one hundred percent is not a sign that something 
+            has gone wrong. It is a sign that the hardware is being asked to do more 
+            concurrent work than its physical architecture can handle at that speed.
+          </p>
+          <p>
+            Four gigabytes of RAM in a managed enterprise environment running Windows 7 
+            with background agents — antivirus, endpoint management, policy enforcement, 
+            browser — is tight. There is no slack. The system is not broken. It is 
+            saturated.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The diagnostic sequence</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            I connected remotely using the case management console deployed across the 
+            fleet. I observed CPU and disk utilization in Task Manager during the 
+            post-boot window. I reviewed running processes, identified the startup load 
+            pattern, and confirmed that the behavior was consistent and systemic rather 
+            than caused by a rogue process or malware. I rebooted the machine, observed 
+            the same behavior on the subsequent boot, and confirmed the pattern was 
+            reproducible.
+          </p>
+          <p>
+            I documented each step in the ticket. The troubleshooting notes included 
+            what I observed, the utilization percentages, the tools used, the reboot 
+            timestamp, and my assessment.
+          </p>
+          <p>
+            My assessment was honest. There was no software-level resolution available 
+            that would materially improve this user's experience. The constraint was 
+            hardware. Allocating additional virtual memory would not help a machine 
+            whose bottleneck was disk read speed. You cannot make a spinning platter 
+            move faster through configuration. The correct resolution was a hardware 
+            refresh. Until that happened, the machine would continue to behave this 
+            way at every boot cycle.
+          </p>
+        </div>
+      </section>
+
+<section class="panel">
+        <div class="section-head">
+          <h2>The escalation</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The user called the head of the IT service desk directly. The claim, relayed 
+            through the chain, was that I had not rebooted the machine. My supervisor 
+            came to my desk. The implication was clear. I had either failed to perform 
+            the basic troubleshooting step or failed to document it. Neither was true.
+          </p>
+          <p>
+            I remoted back into the machine and opened a command prompt. I ran one command.
+          </p>
+          <p>
+            <code>systeminfo | find "System Boot Time"</code>
+          </p>
+          <p>
+            The system returned the timestamp of the reboot I had performed and documented 
+            in the ticket. The machine's own records showed when it had last been restarted. 
+            The claim that I had not rebooted the machine was not supported by the evidence 
+            on the machine itself. The escalation ended there.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Two ways to prove a reboot occurred</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            The command line approach is the fastest method when you are already remoted 
+            into a machine via command prompt. The pipe character takes the full output 
+            of systeminfo — a long list of system details — and filters it through the 
+            find command, returning only the single line containing the last boot 
+            timestamp.
+          </p>
+          <p>
+            A second method, which produces stronger documentary evidence, is Windows 
+            Event Viewer. Navigate to Windows Logs, then System, and filter for two 
+            specific Event IDs. Event ID 6005 is recorded by the Event Log service 
+            when it starts, which only occurs at boot. Event ID 6006 is recorded at 
+            shutdown. The sequence of 6006 followed by 6005 in the System log gives 
+            an exact, timestamped record of every shutdown and startup the machine 
+            has experienced, not just the most recent one.
+          </p>
+          <p>
+            From a documentation and escalation perspective, the Event Viewer approach 
+            is more defensible. It is a system-generated log entry that exists 
+            independently of anything the technician recorded manually. When organizational 
+            pressure is applied and someone questions whether work was performed, a 
+            system log entry is a more authoritative answer than a ticket note — because 
+            the machine wrote it, not the technician.
+          </p>
+          <p>
+            In this case the command line timestamp was sufficient. The record was 
+            complete. The conversation ended.
+          </p>
+        </div>
+      </section>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>The documentation lesson</h2>
+        </div>
+        <div class="note-card">
+          <p>
+            Documentation is not bureaucratic overhead. It is the only objective record 
+            that exists when memory, perception, and organizational pressure all point 
+            in different directions. The ticket contained the reboot. The command 
+            confirmed the reboot. The conversation ended because the record was complete.
+          </p>
+          <p>
+            Honesty about hardware constraints is not a failure of service. It is accurate 
+            information delivered to someone who deserves to understand why their tool 
+            behaves the way it does. The alternative — performing additional troubleshooting 
+            that produces no improvement and closes the ticket without resolution — serves 
+            no one except the metric that counts closed tickets.
+          </p>
+          <p>
+            The endpoint was eventually refreshed as part of a scheduled fleet update 
+            cycle. The problem resolved when the hardware changed. Which is what I said 
+            would happen.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>© 2026 Signal & Systems</footer>
+
+  </div>
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
