@@ -282,10 +282,28 @@
               </tr>
             </thead>
             <tbody>
+              <tr style="border-bottom: 1px solid var(--border); background: var(--surface-alt, #f5f5f5);">
+                <td style="padding:0.6rem 0.8rem;">Sea Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Network Infrastructure</td>
+                <td style="padding:0.6rem 0.8rem;">Underlying transport layer — prerequisite for all other phases</td>
+                <td style="padding:0.6rem 0.8rem;">Foundation</td>
+              </tr>
               <tr style="border-bottom: 1px solid var(--border);">
                 <td style="padding:0.6rem 0.8rem;">Commanders</td>
                 <td style="padding:0.6rem 0.8rem;">Active Directory Domain Services</td>
                 <td style="padding:0.6rem 0.8rem;">Authentication, policy enforcement, directory authority</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Land Based Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Domain-joined Workstations</td>
+                <td style="padding:0.6rem 0.8rem;">On premises endpoints within the internal network</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Administrative Models</td>
+                <td style="padding:0.6rem 0.8rem;">Delegated AD Administration / RBAC</td>
+                <td style="padding:0.6rem 0.8rem;">Scoped administrative access without full domain authority</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 1</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
@@ -298,6 +316,12 @@
                 <td style="padding:0.6rem 0.8rem;">Maintenance Units</td>
                 <td style="padding:0.6rem 0.8rem;">Windows Server Update Services</td>
                 <td style="padding:0.6rem 0.8rem;">Patch distribution and endpoint health maintenance</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding:0.6rem 0.8rem;">Manufacturer Models</td>
+                <td style="padding:0.6rem 0.8rem;">Certificate Authority — AD CS</td>
+                <td style="padding:0.6rem 0.8rem;">Issuing trusted identities and certificates</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 2</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
@@ -319,50 +343,27 @@
                 <td style="padding:0.6rem 0.8rem;">Phase 3</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Manufacturer Models</td>
-                <td style="padding:0.6rem 0.8rem;">Certificate Authority — AD CS</td>
-                <td style="padding:0.6rem 0.8rem;">Issuing trusted identities and certificates</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 2</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Flight Units</td>
-                <td style="padding:0.6rem 0.8rem;">Azure Arc / Cloud Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Remote assets reporting to command from outside the perimeter</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 4</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Land Based Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Domain-joined Workstations</td>
-                <td style="padding:0.6rem 0.8rem;">On premises endpoints within the internal network</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding:0.6rem 0.8rem;">Sea Assets</td>
-                <td style="padding:0.6rem 0.8rem;">Network Infrastructure</td>
-                <td style="padding:0.6rem 0.8rem;">Underlying transport layer — invisible but foundational</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
                 <td style="padding:0.6rem 0.8rem;">Air Based Assets</td>
                 <td style="padding:0.6rem 0.8rem;">MDM-managed Mobile Devices</td>
                 <td style="padding:0.6rem 0.8rem;">Wireless and mobile endpoints under central management</td>
                 <td style="padding:0.6rem 0.8rem;">Phase 3</td>
               </tr>
               <tr>
-                <td style="padding:0.6rem 0.8rem;">Administrative Models</td>
-                <td style="padding:0.6rem 0.8rem;">Delegated AD Administration / RBAC</td>
-                <td style="padding:0.6rem 0.8rem;">Scoped administrative access without full domain authority</td>
-                <td style="padding:0.6rem 0.8rem;">Phase 1</td>
+                <td style="padding:0.6rem 0.8rem;">Flight Units</td>
+                <td style="padding:0.6rem 0.8rem;">Azure Arc / Cloud Assets</td>
+                <td style="padding:0.6rem 0.8rem;">Remote assets reporting to command from outside the perimeter</td>
+                <td style="padding:0.6rem 0.8rem;">Phase 4</td>
               </tr>
             </tbody>
           </table>
 
           <p style="margin-top:1.5rem;">
-            Phase 1 is the current lab build — domain controller, DNS, DHCP, 
-            organizational units, Group Policy, and domain-joined workstations. 
-            Phases 2 through 4 are documented here as planned architecture, 
-            providing a roadmap for lab expansion as each component is implemented 
-            and documented.
+            Network infrastructure is a prerequisite that exists before the lab build 
+            begins — it is not a phase, it is the foundation everything else runs on. 
+            Phase 1 establishes the domain — domain controller, DNS, DHCP, 
+            organizational units, Group Policy, workstation domain join, and delegated 
+            administration. Phases 2 through 4 expand the environment progressively 
+            as each component is implemented and documented.
           </p>
         </div>
       </section>
